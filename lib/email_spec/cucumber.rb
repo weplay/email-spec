@@ -15,7 +15,4 @@ After do
   EmailSpec::EmailViewer.save_and_open_all_text_emails if ENV['SHOW_TEXT_EMAILS']
 end
 
-World do |world|
-  world.extend EmailSpec::Helpers
-  world.extend EmailSpec::Matchers
-end
+World(EmailSpec::Helpers, EmailSpec::Matchers)
