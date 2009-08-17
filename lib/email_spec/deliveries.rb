@@ -36,6 +36,9 @@ module EmailSpec
     end
     
     def mailbox_for(address)
+      if ActionMailer::Base.delivery_method == :delayed_job
+        process_background_jobs
+      end
       address = AddressConverter.instance.convert(address)
       Email.all.select { |email| email.to.include?(address) }.map{ |email| parse_to_tmail(email) }
     end
@@ -46,7 +49,7 @@ module EmailSpec
   end
   
   module Deliveries
-    if ActionMailer::Base.delivery_method == :activerecord
+    if [:activerecord, :delayed_job].include?(ActionMailer::Base.delivery_method)
       include EmailSpec::ARMailerDeliveries
     else
       include EmailSpec::TestDeliveries
