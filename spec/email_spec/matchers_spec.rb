@@ -143,6 +143,10 @@ describe EmailSpec::Matchers do
     it "should have specs!"
   end
 
+  describe "#include_email_with_body" do
+    it "should have specs!"
+  end
+
   describe "#have_body_text" do
     it "should have specs!"
   end
